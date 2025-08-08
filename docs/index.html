@@ -1,0 +1,28 @@
+<!-- docs/index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>xll_vswap: Variance Swap Pricer</title>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async
+    src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  </script>
+</head>
+<body>
+  <h1>Variance Swap Pricer</h1>
+  <p>The payoff at expiration \( t_n \) is:</p>
+
+  $$
+  \sigma^2 = \frac{1}{t_n - t_0} \sum_{j=0}^{n-1} \left( \frac{\Delta X_j}{X_j} \right)^2
+  $$
+
+  <p>Using Taylor's expansion and choosing \( f''(x) = \frac{2}{x^2} \), we derive:</p>
+
+  $$
+  \sum_{j=0}^{n-1} \left( \frac{\Delta X_j}{X_j} \right)^2 = 2\log\frac{X_n}{X_0} + \frac{2(X_n - X_0)}{z} + \sum_{j=0}^{n-1} \left( \frac{2}{X_j} - \frac{2}{z} \right)\Delta X_j + O\left( \left( \frac{\Delta X_j}{X_j} \right)^3 \right)
+  $$
+
+  <p>The first two terms resemble a European option payoff, while the sum can be replicated by dynamically trading futures on \( X \).</p>
+</body>
+</html>

@@ -23,5 +23,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
+    <None Include="docs\index.html" />
   </ItemGroup>
 </Project>
