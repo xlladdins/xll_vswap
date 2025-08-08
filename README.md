@@ -1,1 +1,20 @@
-# Project1
+# xll_vswap
+
+Add-in for variance swap pricing.
+
+A variance swap contract specfies observation times $t_j$ and values $X_{t_j}$. The payoff
+at expiration $t_n$ is $\sigma^2 = 1/(t_n - t_0) \sum_{j = 0}^{n-1} (\Delta X_j/X_j)^2$
+where $\Delta X_j = X_{t_{j+1}} - X_{t_j}$.
+
+Since $f(X_n) - f(X_0) = \sum_{j=0}^{n-1} f(X_{j+1}) - f(X_j)$ and 
+$f(X_{j + 1} - f(X_j) = \sum_{k>0} f^{(k)}(X_j) \Delta X_k/k!$ when Taylor's formula applies.
+We choose $f$ with $f''(x) = 2/x^2$ so the second order term is $(\Delta X_j/X_j)^2$
+and we get the variance swap payoff.
+This gives $f'(x) = -2/x + c$ and $f(x) = -2\log x + cx$ for some constant $c$. It is convenient to choose $c = 2/z$ 
+for what follows.
+
+We have
+$$
+\sum_{j=0}^{n-1} (\Delta X_j/X_j)^2 = 2\log X_n/X_0 + 2(X_n - X_0)/z + \sum_{j=0}^{n-1} (2/X_j - 2/z)\Delta X_j + O((\Delta X_j/X_j)^3)
+$$
+The first two terms on the right are a European option and the sum can be replicated by dynamically trading futures on $X$.
